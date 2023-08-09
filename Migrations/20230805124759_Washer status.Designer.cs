@@ -4,6 +4,7 @@ using CarWashSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarWashSystem.Migrations
 {
     [DbContext(typeof(OnDemandDbContext))]
-    partial class OnDemandDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230805124759_Washer status")]
+    partial class Washerstatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,8 +120,8 @@ namespace CarWashSystem.Migrations
                     b.Property<int?>("WashPackageId")
                         .HasColumnType("int");
 
-                    b.Property<string>("WasherId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("WasherId")
+                        .HasColumnType("int");
 
                     b.Property<string>("WashingStatus")
                         .HasColumnType("nvarchar(max)");

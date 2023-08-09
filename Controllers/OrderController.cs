@@ -34,13 +34,42 @@ namespace CarWashSystem.Controllers
           TotalAmount = order.TotalAmount,
           CarModel = order.CarModel,
           CarNumber = order.CarNumber,
-          UserId = order.UserId.HasValue ? (int)order.UserId : 0 // Or any default value you prefer
+          WashingStatus=order.WashingStatus,
+          UserId = order.UserId.HasValue ? (int)order.UserId : 0,
+          WasherId = order.WasherId// Or any default value you prefer
         });
       }
 
       return Ok(orderdto);
     }
 
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<OrderPlacementDto>> GetOrderById(int id)
+    {
+      var order = await orderrepository.GetOrderById(id);
+
+      if (order == null)
+      {
+        return NotFound();
+      }
+
+      var orderdto = new OrderPlacementDto()
+      {
+        Id = order.Id,
+        Name = order.Name,
+        scheduledatetime = order.scheduledatetime,
+        PickUpPoint = order.PickUpPoint,
+        TotalAmount = order.TotalAmount,
+        CarModel = order.CarModel,
+        CarNumber = order.CarNumber,
+        WashingStatus = order.WashingStatus,
+        UserId = order.UserId.HasValue ? (int)order.UserId : 0,
+        WasherId = order.WasherId // Or any default value you prefer
+      };
+
+      return Ok(orderdto);
+    }
 
 
     [HttpPost]
@@ -56,6 +85,8 @@ namespace CarWashSystem.Controllers
         UserId = (int)order.UserId,
         CarModel = order.CarModel,
         CarNumber = order.CarNumber,
+        WasherId = order.WasherId,
+        WashingStatus = "Pending",
       };
       orders = await orderrepository.CreateOrder(orders);
       return Ok(orders);
@@ -74,6 +105,25 @@ namespace CarWashSystem.Controllers
       // no asyn method for remove so no await for remove
 
       return Ok(order);
+    }
+
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> UpdateOrder(int id, UpdateOrderDto updateorderdto)
+    {
+      var order = await orderrepository.GetOrderById(id);
+
+      if (order == null)
+      {
+        return NotFound();
+      }
+
+      order.WashingStatus = updateorderdto.WashingStatus;
+      order.WasherId = updateorderdto.WasherId;
+
+      await orderrepository.UpdateOrder(id, order);
+
+      return NoContent();
     }
 
 

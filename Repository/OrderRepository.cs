@@ -37,5 +37,29 @@ namespace CarWashSystem.Repository
     {
       return await context.Orders.ToListAsync();
     }
+
+
+    public async Task<Order> GetOrderById(int id)
+    {
+      return await context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+   public async Task<Order> UpdateOrder(int id, Order order)
+{
+    var existingdata = await context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+
+    if (existingdata == null)
+    {
+        return null;
+    }
+
+    existingdata.WashingStatus = order.WashingStatus;
+    existingdata.WasherId = order.WasherId;
+
+    await context.SaveChangesAsync();
+
+    return existingdata;
+}
+
   }
 }

@@ -11,10 +11,14 @@ namespace CarWashSystem.DTO
       public string PickUpPoint { get; set; }
       public double TotalAmount { get; set; }
 
+     public string WashingStatus { get; set; }
     public string CarModel { get; set; }
 
     public string CarNumber { get; set; }
-    public int UserId { get; set; }   
-    }
+    public int UserId { get; set; }
+    public string WasherId  {get; set; }
+
+
+}
   }
 

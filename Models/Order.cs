@@ -30,7 +30,9 @@ namespace CarWashSystem.Models
         public User? User { get; set; }
         public int? UserId { get; set; }
 
-        public Car? Car { get; set; }
+        public string? WasherId { get; set; }
+   
+    public Car? Car { get; set; }
         public int? CarId { get; set; }
 
         public WashPackage? WashPackage { set; get; }
